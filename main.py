@@ -14,6 +14,13 @@ class AdventureGame:
         else:
             print("\nYour inventory is empty.")
 
+    def get_valid_input(self, prompt, valid_choices):
+        while True:
+            choice = input(prompt).lower()
+            if choice in valid_choices:
+                return choice
+            print("Invalid choice! Please try again.")
+
     def start_game(self):
         print("""
 ****************************************************
@@ -33,27 +40,25 @@ What will you do?
 Choose 1 or 2:
 """)
 
-        choice = input("Enter your choice: ")
+        choice = self.get_valid_input("Enter your choice: ", ["1", "2"])
 
         if choice == "1":
             self.path_left()
         elif choice == "2":
             self.path_right()
-        else:
-            print("Invalid choice! The forest seems to grow darker as you hesitate...")
 
     def path_left(self):
         print("\nYou take the path to the left, hoping it leads to safety...")
         print("After walking for a while, you find an abandoned campsite. There is a lantern on the ground.")
-        
-        pick_item = input("Will you take the lantern? (yes/no): ").lower()
+
+        pick_item = self.get_valid_input("Will you take the lantern? (yes/no): ", ["yes", "no"])
         if pick_item == "yes":
             self.add_to_inventory("Lantern")
         else:
             print("You leave the lantern behind and continue walking.")
 
         print("You see a dark cave ahead. Do you want to explore it?")
-        explore_cave = input("Enter your choice (yes/no): ").lower()
+        explore_cave = self.get_valid_input("Enter your choice (yes/no): ", ["yes", "no"])
 
         if explore_cave == "yes":
             if "Lantern" in self.inventory:
@@ -75,7 +80,7 @@ Choose 1 or 2:
         but great risk comes with it. Choose wisely."
         """)
 
-        sub_choice = input("Will you take the artifact? (yes/no): ").lower()
+        sub_choice = self.get_valid_input("Will you take the artifact? (yes/no): ", ["yes", "no"])
 
         if sub_choice == "yes":
             print("""
@@ -91,8 +96,6 @@ Choose 1 or 2:
             The clearing collapses, and you fall into a deep chasm. Your story 
             ends here, swallowed by the unknown.
             """)
-        else:
-            print("Invalid choice! The artifact glows brighter as the clearing fades into darkness...")
 
 # Start the game
 game = AdventureGame()
